@@ -10,7 +10,7 @@ from sklearn.preprocessing import normalize
 
 def detect_faces(image, image_size, model):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    faces = FACE_CASCADE.detectMultiScale(gray, 1.3, 5)
+    faces = FACE_CASCADE.detectMultiScale(gray, 1.3, 6)
 
     if len(faces) != 0:
         x, y, w, h = faces[0]

@@ -13,7 +13,7 @@ def return_faces(image, image_size, show=True, return_all=False):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Default parameters as per docs
-    faces = FACE_CASCADE.detectMultiScale(gray, 1.3, 5)
+    faces = FACE_CASCADE.detectMultiScale(gray, 1.3, 6)
 
     # Creates a list of all faces detected in the frame
     face_images = []
