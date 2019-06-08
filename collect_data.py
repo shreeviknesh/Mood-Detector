@@ -5,13 +5,10 @@ import pickle
 import numpy as np
 from sklearn.preprocessing import normalize
 
-# The classifier that detects faces
-FACE_CASCADE = cv2.CascadeClassifier(
-    './vendor/haarcascade_frontalface_default.xml'
-)
+from constants import FACE_CASCADE
 
 
-def return_faces(image, image_size):
+def return_faces(image, image_size, show=True, return_all=False):
     # Greyscale image because color doesn't factor into the mood of the person in the pic
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -27,12 +24,21 @@ def return_faces(image, image_size):
         # Only considering the first face in all the faces
         # If training phase considers more than one face per frame
         # Change the code with a for loop
-        cv2.imshow('Frame', face_images[0])
+        if show:
+            cv2.imshow('Frame', face_images[0])
 
-        # Resizing all the images to a standard size
-        resized_image = cv2.resize(
-            face_images[0], image_size, interpolation=cv2.INTER_CUBIC)
-        return resized_image
+        if return_all:
+            # Resizing all the images to a standard size
+            all_faces = []
+            for face in face_images:
+                resized_image = cv2.resize(
+                    face, image_size, interpolation=cv2.INTER_CUBIC)
+                all_faces.append(resized_image)
+            return all_faces
+        else:
+            resized_image = cv2.resize(
+                face_images[0], image_size, interpolation=cv2.INTER_CUBIC)
+            return resized_image
     except:
         # IF face_images is empty, i.e., no faces are detected in the frame
         return None
