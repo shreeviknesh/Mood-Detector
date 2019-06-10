@@ -3,6 +3,9 @@ import cv2
 from collect_data import return_faces
 from constants import *
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 import tensorflow as tf
 import numpy as np
 from sklearn.preprocessing import normalize

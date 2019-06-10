@@ -1,13 +1,14 @@
-import os
-import pickle
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
-
+from constants import *
+from collect_data import collect_training_data
 import matplotlib.pyplot as plt
 
-from collect_data import collect_training_data
-from constants import *
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
+from tensorflow.keras.models import Sequential
+import os
+import pickle
 
 
 def load_data():
@@ -27,33 +28,41 @@ def create_model(INPUT_SHAPE, NUM_CLASSES):
     model.add(Conv2D(32, 3, input_shape=INPUT_SHAPE,
                      padding='same', activation='relu'))
     model.add(MaxPooling2D(pool_size=2))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.4))
     model.add(Conv2D(32, 3, padding='same', activation='relu'))
     model.add(MaxPooling2D(pool_size=2))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.4))
     model.add(Flatten())
-    model.add(Dense(64, activation='relu'))
-    model.add(Dense(NUM_CLASSES, activation='sigmoid'))
+    model.add(Dense(128, activation='relu'))
 
-    loss = 'sparse_categorical_crossentropy'
-    optimizer = 'adam'  # use 'adam' also
+    if NUM_CLASSES == 2:
+        model.add(Dense(1, activation='sigmoid'))
+        loss = 'binary_crossentropy'
+    else:
+        model.add(Dense(NUM_CLASSES, activation='softmax'))
+        loss = 'sparse_categorical_crossentropy'
+
+    optimizer = 'adam'
     metrics = ['acc']
     model.compile(loss=loss, optimizer=optimizer, metrics=metrics)
 
     return model
 
 
-if __name__ == "__main__":
-    if not DATA_COLLECTED:
-        collect_training_data(MOODS, TRAINING_FOLDER,
-                              TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
+class StopCallback(Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if logs.get('acc') > 0.99:
+            print(
+                f'\nStopped training after epoch {epoch} because accuracy > 0.99.')
+            self.model.stop_training = True
 
-    (train_x, train_y) = load_data()
 
-    model = create_model(INPUT_SHAPE, NUM_CLASSES)
-    hist = model.fit(train_x, train_y, epochs=EPOCHS,
-                     batch_size=8, shuffle=True, validation_split=0.2)
+def fit_model(model, x, y, epochs, batch_size):
+    hist = model.fit(x, y, epochs=epochs,
+                     batch_size=batch_size, shuffle=True, validation_split=0.2, callbacks=[StopCallback()])
 
+    if 'model' not in os.listdir(os.getcwd()):
+        os.mkdir('model')
     model.save('model/model.h5')
     del model
 
@@ -63,7 +72,6 @@ if __name__ == "__main__":
     plt.ylabel('Loss value')
     plt.plot(hist.history['loss'])
     plt.savefig('model/loss.png')
-    plt.show()
 
     plt.figure()
     plt.title('Accuracy')
@@ -71,4 +79,19 @@ if __name__ == "__main__":
     plt.ylabel('Accuracy value')
     plt.plot(hist.history['acc'])
     plt.savefig('model/acc.png')
-    plt.show()
+
+
+if __name__ == "__main__":
+    if 'training_data' in os.listdir(os.getcwd()):
+        flag = input(
+            'training data seems to be present already, do you want to collect data again [Y/N]?')
+        if flag.lower() == 'y':
+            collect_training_data(MOODS, TRAINING_FOLDER,
+                                  TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
+    else:
+        collect_training_data(MOODS, TRAINING_FOLDER,
+                              TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
+
+    (train_x, train_y) = load_data()
+    model = create_model(INPUT_SHAPE, NUM_CLASSES)
+    fit_model(model, train_x, train_y, EPOCHS, 8)
