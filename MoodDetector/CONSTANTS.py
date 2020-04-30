@@ -2,7 +2,8 @@ import cv2
 
 # Initializing some constants
 MOODS = ['happy', 'sad']
-TRAINING_FOLDER = 'data'
+TRAINING_FOLDER = 'Data/'
+MODEL_FOLDER = 'Model/'
 TRAIN_SIZE_PER_MOOD = 250
 IMAGE_SIZE = (150, 150)
 
@@ -12,5 +13,4 @@ NUM_CLASSES = len(MOODS)
 EPOCHS = 10
 
 # The classifier that detects faces
-FACE_CASCADE = cv2.CascadeClassifier(
-    'vendor/haarcascade_frontalface_default.xml')
+FACE_CASCADE = cv2.CascadeClassifier('Vendor/opencv/haarcascade_frontalface_default.xml')

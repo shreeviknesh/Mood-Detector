@@ -2,9 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-training_data/
-model/
-data/
+Data/
+Model/
 
 # C extensions
 *.so
