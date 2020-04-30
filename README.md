@@ -8,6 +8,8 @@ Contents
 - [Dependencies](#dependencies)
 - [Installing Dependencies](#installing-dependencies)
 - [Usage](#usage)
+- [Sample](#sample)
+- [Future Work](#future-work)
 
 Dependencies
 ----
@@ -42,13 +44,17 @@ Usage
 Sample
 ----
 Below is results of sample model trained on two moods: happy and sad, 250 images per mood for a total of 10 epochs.
-
 <img src="https://media.giphy.com/media/ftY4abjTNr3Mprtq9S/giphy.gif" alt="Detection Sample"/>
 
 As you can see from the above GIF, the model adequately classifies the reaction of my face into the different moods.
-Moreover, two graphs Acc vs Epoch and Loss vs Epoch are displayed below.
 
+Moreover, two graphs Acc vs Epoch and Loss vs Epoch are displayed below.
 |y-axis vs x-axis|Graph|
 |---|---|
 |Accuracy vs Epoch|<img src="screenshots/acc.png" alt="Accuracy vs Epoch" width="500px">|
 |Loss vs Epoch|<img src="screenshots/loss.png" alt="Loss vs Epoch" width="500px">|
+
+Future Work
+----
+- Leveraging the model into a recommendation system that knows the user's likes/dislikes and suggests activities based on his/her mood.
+- Training the model using a deeper and more-sophisticated model with a much larger dataset for higher number of epochs. I don't have the compute power currently to do it.
