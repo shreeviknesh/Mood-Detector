@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 training_data/
 model/
+data/
 
 # C extensions
 *.so

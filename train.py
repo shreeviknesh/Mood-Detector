@@ -2,12 +2,12 @@ from constants import *
 from collect_data import collect_training_data
 import matplotlib.pyplot as plt
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from tensorflow.keras.callbacks import Callback
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 from tensorflow.keras.models import Sequential
-import os
 import pickle
 
 
@@ -25,8 +25,7 @@ def create_model(INPUT_SHAPE, NUM_CLASSES):
     """A function that creates a CNN model & returns it."""
 
     model = Sequential()
-    model.add(Conv2D(32, 3, input_shape=INPUT_SHAPE,
-                     padding='same', activation='relu'))
+    model.add(Conv2D(32, 3, input_shape=INPUT_SHAPE, padding='same', activation='relu'))
     model.add(MaxPooling2D(pool_size=2))
     model.add(Dropout(0.4))
     model.add(Conv2D(32, 3, padding='same', activation='relu'))
@@ -58,8 +57,7 @@ class StopCallback(Callback):
 
 
 def fit_model(model, x, y, epochs, batch_size):
-    hist = model.fit(x, y, epochs=epochs,
-                     batch_size=batch_size, shuffle=True, validation_split=0.2, callbacks=[StopCallback()])
+    hist = model.fit(x, y, epochs=epochs, batch_size=batch_size, shuffle=True, validation_split=0.2, callbacks=[StopCallback()])
 
     if 'model' not in os.listdir(os.getcwd()):
         os.mkdir('model')
@@ -82,15 +80,12 @@ def fit_model(model, x, y, epochs, batch_size):
 
 
 if __name__ == "__main__":
-    if 'training_data' in os.listdir(os.getcwd()):
-        flag = input(
-            'training data seems to be present already, do you want to collect data again [Y/N]?')
+    if TRAINING_FOLDER in os.listdir(os.getcwd()):
+        flag = input('training data seems to be present already, do you want to collect data again [Y/N]?')
         if flag.lower() == 'y':
-            collect_training_data(MOODS, TRAINING_FOLDER,
-                                  TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
+            collect_training_data(MOODS, TRAINING_FOLDER, TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
     else:
-        collect_training_data(MOODS, TRAINING_FOLDER,
-                              TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
+        collect_training_data(MOODS, TRAINING_FOLDER, TRAIN_SIZE_PER_MOOD, IMAGE_SIZE)
 
     (train_x, train_y) = load_data()
     model = create_model(INPUT_SHAPE, NUM_CLASSES)

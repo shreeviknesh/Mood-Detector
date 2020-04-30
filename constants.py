@@ -2,7 +2,7 @@ import cv2
 
 # Initializing some constants
 MOODS = ['happy', 'sad']
-TRAINING_FOLDER = 'training_data'
+TRAINING_FOLDER = 'data'
 TRAIN_SIZE_PER_MOOD = 250
 IMAGE_SIZE = (150, 150)
 
