@@ -14,15 +14,15 @@ Contents
 Dependencies
 ----
 1. [OpenCV-python](https://pypi.org/project/opencv-python/)
-    - To read webcam inputs
-    - To detect faces in the frames of videos using [Haarcascade Classifier](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml)
+    - To read webcam inputs.
+    - To detect faces in the frames of videos using [Haarcascade Classifier](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml).
     - To resize/convert/save/load images.
 2. [TensorFlow](https://pypi.org/project/tensorflow/)
-    - To normalize input data
-    - To define the model using `tensorflow.keras` - Convolutional Neural Network Model (CNN)
-    - To load/save/train the model
-3. [Numpy](https://pypi.org/project/numpy/) for arrays (`numpy.array`)
-4. [Matplotlib](https://pypi.org/project/matplotlib/) for plotting training/testing accuracy and error
+    - To normalize input data.
+    - To define the model using `tensorflow.keras` - Convolutional Neural Network Model (CNN).
+    - To load/save/train the model.
+3. [Numpy](https://pypi.org/project/numpy/) for arrays (`numpy.array`).
+4. [Matplotlib](https://pypi.org/project/matplotlib/) for plotting training/testing accuracy and error.
 
 Installing Dependencies
 ----
