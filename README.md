@@ -48,5 +48,7 @@ Below is results of sample model trained on two moods: happy and sad, 250 images
 As you can see from the above GIF, the model adequately classifies the reaction of my face into the different moods.
 Moreover, two graphs Acc vs Epoch and Loss vs Epoch are displayed below.
 
-|Accuracy vs Epoch|<img src="screenshots/acc.png" alt="Accuracy vs Epoch">|
-|Loss vs Epoch|<img src="screenshots/loss.png" alt="Loss vs Epoch">|
+|y-axis vs x-axis|Graph|
+|---|---|
+|Accuracy vs Epoch|<img src="screenshots/acc.png" alt="Accuracy vs Epoch" width="500px">|
+|Loss vs Epoch|<img src="screenshots/loss.png" alt="Loss vs Epoch" width="500px">|
